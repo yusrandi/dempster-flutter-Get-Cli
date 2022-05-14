@@ -20,75 +20,22 @@ class HomeView extends GetView<HomeController> {
       body: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(gradient: CoreColor.bottomShadowShoft),
-        child: Column(
+        child: Stack(
           children: [
-            Obx((() => Expanded(
-                child: Container(
-                    child: controller.count.value == 0
-                        ? _dashBoardView()
-                        : controller.count.value == 1
-                            ? InformasiView()
-                            : controller.count.value == 2
-                                ? KonsultasiView()
-                                : TentangView())))),
-            Container(
-              width: double.infinity,
-              height: 80,
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    top: 25,
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25))),
-                  ),
-                  Positioned(
-                      bottom: 8,
-                      left: 8,
-                      right: 8,
-                      top: 8,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/Bell.svg",
-                            color: Colors.grey,
-                            height: 25,
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/Chat bubble Icon.svg",
-                            color: Colors.red,
-                            height: 25,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red[100], shape: BoxShape.circle),
-                            margin: EdgeInsets.only(bottom: 6),
-                            padding: EdgeInsets.all(10),
-                            child: SvgPicture.asset(
-                              "assets/icons/Conversation.svg",
-                              color: Colors.red,
-                              height: 40,
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/Lock.svg",
-                            color: Colors.red,
-                            height: 25,
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/Settings.svg",
-                            color: Colors.red,
-                            height: 25,
-                          ),
-                        ],
-                      )),
-                ],
+            Obx((() => Container(
+                child: controller.count.value == 0
+                    ? _dashBoardView()
+                    : controller.count.value == 1
+                        ? InformasiView()
+                        : controller.count.value == 2
+                            ? KonsultasiView()
+                            : TentangView()))),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                height: 80,
+                child: _tabItem(),
               ),
             ),
           ],
@@ -162,7 +109,7 @@ class HomeView extends GetView<HomeController> {
             controller.setIndex(index);
           },
           child: Container(
-            height: 60,
+            height: 80,
             decoration: BoxDecoration(
                 color: controller.count.value == index
                     ? CoreColor.primary
