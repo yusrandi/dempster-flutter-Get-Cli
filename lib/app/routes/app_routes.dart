@@ -8,7 +8,8 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const INFORMASI = _Paths.INFORMASI;
   static const KONSULTASI = _Paths.KONSULTASI;
-  static const TENTANG = _Paths.TENTANG;
+  static const DETAIL = _Paths.DETAIL;
+  static const DIAGNOSA = _Paths.DIAGNOSA;
 }
 
 abstract class _Paths {
@@ -17,4 +18,6 @@ abstract class _Paths {
   static const INFORMASI = '/informasi';
   static const KONSULTASI = '/konsultasi';
   static const TENTANG = '/tentang';
+  static const DETAIL = '/detail';
+  static const DIAGNOSA = '/diagnosa';
 }

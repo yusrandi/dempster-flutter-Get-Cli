@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_cli_dempster_flutter/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 
 import '../../../cores/core_colors.dart';
+import '../../../cores/core_styles.dart';
 import '../controllers/konsultasi_controller.dart';
 
 class KonsultasiView extends GetView<KonsultasiController> {
@@ -11,27 +13,28 @@ class KonsultasiView extends GetView<KonsultasiController> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.only(top: 36),
-        child: Stack(
-          children: [
-            Column(
+    return Stack(
+      children: [
+        Container(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("History Diagnosa",
-                    style: TextStyle(
-                        color: CoreColor.primary,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
-                Expanded(
+                SizedBox(height: 50),
+                Text("History Diagnosa", style: CoreStyles.uTitle),
+                MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
                   child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: 10,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.all(8),
-                          margin: EdgeInsets.only(bottom: 8),
+                          margin: EdgeInsets.only(bottom: 8, top: 8),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16)),
@@ -97,22 +100,24 @@ class KonsultasiView extends GetView<KonsultasiController> {
                           ),
                         );
                       }),
-                )
+                ),
+                SizedBox(height: 100),
               ],
             ),
-            Positioned(
-                right: 16,
-                bottom: 16,
-                child: FloatingActionButton(
-                  focusColor: CoreColor.primary,
-                  hoverColor: CoreColor.primary,
-                  backgroundColor: CoreColor.primary,
-                  onPressed: () {},
-                  child: Icon(Icons.add),
-                ))
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          right: 8,
+          bottom: 80,
+          child: FloatingActionButton(
+            onPressed: () {
+              Get.toNamed(Routes.DIAGNOSA);
+            },
+            backgroundColor: CoreColor.primary,
+            child: Icon(Icons.add),
+          ),
+        )
+      ],
     );
   }
 }

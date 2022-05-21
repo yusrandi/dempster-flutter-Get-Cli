@@ -9,37 +9,43 @@ import 'package:get_cli_dempster_flutter/app/modules/tentang/views/tentang_view.
 import 'package:lottie/lottie.dart';
 
 import '../../../cores/core_images.dart';
+import '../../auth/controllers/authentication_manager.dart';
+import '../../auth/views/auth_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  int _index = 0;
+  final AuthenticationManager _authManager = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(gradient: CoreColor.bottomShadowShoft),
-        child: Stack(
-          children: [
-            Obx((() => Container(
-                child: controller.count.value == 0
-                    ? _dashBoardView()
-                    : controller.count.value == 1
-                        ? InformasiView()
-                        : controller.count.value == 2
-                            ? KonsultasiView()
-                            : TentangView()))),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: double.infinity,
-                height: 80,
-                child: _tabItem(),
-              ),
+    return Scaffold(body: Obx(() {
+      return _authManager.isLogged.value ? body() : AuthView();
+    }));
+  }
+
+  Container body() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(gradient: CoreColor.bottomShadowShoft),
+      child: Stack(
+        children: [
+          Obx((() => Container(
+              child: controller.count.value == 0
+                  ? _dashBoardView()
+                  : controller.count.value == 1
+                      ? InformasiView()
+                      : controller.count.value == 2
+                          ? KonsultasiView()
+                          : TentangView()))),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              height: 80,
+              child: _tabItem(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -53,13 +59,18 @@ class HomeView extends GetView<HomeController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-              flex: 1, child: _listMenu("assets/icons/home-filled.svg", 0)),
+              flex: 1,
+              child: _listMenu("assets/icons/home-filled.svg", 0, "home")),
           Expanded(
-              flex: 1, child: _listMenu("assets/icons/bookmark-filled.svg", 1)),
+              flex: 1,
+              child: _listMenu(
+                  "assets/icons/bookmark-filled.svg", 1, "informasi")),
           Expanded(
-              flex: 1, child: _listMenu("assets/icons/Camera Icon.svg", 10)),
-          Expanded(flex: 1, child: _listMenu("assets/icons/Bill Icon.svg", 2)),
-          Expanded(flex: 1, child: _listMenu("assets/icons/Settings.svg", 3)),
+              flex: 1,
+              child: _listMenu("assets/icons/Bill Icon.svg", 2, "diagnosa")),
+          Expanded(
+              flex: 1,
+              child: _listMenu("assets/icons/Settings.svg", 3, "setting")),
         ],
       ),
     );
@@ -103,25 +114,34 @@ class HomeView extends GetView<HomeController> {
     ));
   }
 
-  Widget _listMenu(String title, int index) {
+  Widget _listMenu(String title, int index, String menu) {
     return Obx((() => GestureDetector(
           onTap: () {
             controller.setIndex(index);
           },
           child: Container(
             height: 80,
-            decoration: BoxDecoration(
-                color: controller.count.value == index
-                    ? CoreColor.primary
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(25)),
             child: Center(
-              child: SvgPicture.asset(
-                title,
-                color: controller.count.value == index
-                    ? Colors.white
-                    : CoreColor.primary,
-                height: 20,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    title,
+                    color: controller.count.value == index
+                        ? CoreColor.primary
+                        : CoreColor.kHintTextColor,
+                    height: 20,
+                  ),
+                  Text(
+                    menu,
+                    style: TextStyle(
+                      color: controller.count.value == index
+                          ? CoreColor.primary
+                          : CoreColor.kHintTextColor,
+                    ),
+                  )
+                ],
               ),
             ),
           ),

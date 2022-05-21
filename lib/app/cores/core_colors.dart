@@ -7,6 +7,7 @@ class CoreColor {
   static Color secondary = Color(0xFFEDE5CC);
   static Color whiteSoft = Color(0xFFF8F8F8);
   static Color kTextColor = Color(0xFF757575);
+  static Color kHintTextColor = Color(0xFFBB9B9B9);
 
   static LinearGradient bottomShadow = LinearGradient(colors: [
     Color(0xFF107873).withOpacity(0.5),
