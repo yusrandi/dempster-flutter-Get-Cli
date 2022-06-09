@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_colors.dart';
-import 'package:get_cli_dempster_flutter/app/modules/home/views/home_view.dart';
-import 'package:indent/indent.dart';
 
 import '../../../cores/core_styles.dart';
 import '../../../routes/app_pages.dart';

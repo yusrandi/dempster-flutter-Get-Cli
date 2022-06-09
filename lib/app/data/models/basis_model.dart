@@ -4,7 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:get_cli_dempster_flutter/app/data/models/gejala_model.dart';
 
 BasisModel basisModelFromJson(String str) =>
     BasisModel.fromJson(json.decode(str));

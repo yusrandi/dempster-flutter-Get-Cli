@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 // Form Error
 final RegExp emailValidatorRegExp =
