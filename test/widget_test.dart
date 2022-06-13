@@ -1,8 +1,6 @@
 import 'dart:math';
 
 void main() {
-  print('hahahha');
-
   var m1 = {
     'P001': 0.8,
     'X': 0.2,
@@ -11,8 +9,36 @@ void main() {
     'P001,P002,P003': 0.8,
     'X': 0.2,
   };
+  var m = [
+    {
+      'P001': 0.8,
+      'X': 0.2,
+    },
+    {
+      'P001,P002,P003': 0.8,
+      'X': 0.2,
+    },
+    {
+      'P001,P002,P003': 0.8,
+      'P001,P002': 0.8,
+      'X': 0.2,
+    },
+  ];
 
-  nilaiMatrixMap(m1, m2);
+  // nilaiMatrixMap(m1, m2);
+
+  for (var i = 0; i < m.length; i++) {
+    var mResult = {};
+    if (i > 0) {
+      print(m[i]);
+
+      mResult = nilaiMatrixMap(m[i - 1], m[i]);
+      print('result $mResult');
+      print('=====================================');
+    } else {
+      mResult = m[0];
+    }
+  }
 }
 
 learning() {
@@ -49,6 +75,8 @@ nilaiMatrix(List a, List b) {
 }
 
 nilaiMatrixMap(Map a, Map b) {
+  var mResult = {};
+
   a.forEach((keyA, valueA) {
     b.forEach((keyB, valueB) {
       // print(
@@ -57,12 +85,39 @@ nilaiMatrixMap(Map a, Map b) {
       var listA = keyA.split(',');
       var listB = keyB.split(',');
       if (keyA == 'X' || keyB == 'X') {
-        print(
-            "Hasil ${listA.toSet().union(listB.toSet())} = ${roundDouble(valueA * valueB, 2)}");
+        if (keyA != 'X' || keyB != 'X') {
+          listA.removeWhere((item) => item == 'X');
+          listB.removeWhere((item) => item == 'X');
+        }
+        var key = listA.toSet().union(listB.toSet()).join(',');
+
+        if (mResult.containsKey(key)) {
+          double valueOld = mResult[key];
+          print('has value $valueOld');
+
+          mResult.update(
+              key, (value) => roundDouble((valueOld + (valueA * valueB)), 2));
+        } else {
+          mResult.putIfAbsent(key, () => roundDouble(valueA * valueB, 2));
+        }
+
+        print("Hasil $key = ${roundDouble(valueA * valueB, 2)}");
       } else {
-        print(
-            "Hasil ${listA.toSet().intersection(listB.toSet())} = ${roundDouble(valueA * valueB, 2)}");
+        var key = listA.toSet().intersection(listB.toSet()).join(',');
+
+        if (mResult.containsKey(key)) {
+          double valueOld = mResult[key];
+          print('has value $valueOld');
+
+          mResult.update(
+              key, (value) => roundDouble((valueOld + (valueA * valueB)), 2));
+        } else {
+          mResult.putIfAbsent(key, () => roundDouble(valueA * valueB, 2));
+        }
+        print("Hasil ${key} = ${roundDouble(valueA * valueB, 2)}");
       }
     });
   });
+
+  return mResult;
 }

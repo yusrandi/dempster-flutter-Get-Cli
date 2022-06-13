@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:get_cli_dempster_flutter/app/data/models/penyakit_model.dart';
 
 BasisModel basisModelFromJson(String str) =>
     BasisModel.fromJson(json.decode(str));
@@ -11,24 +12,24 @@ BasisModel basisModelFromJson(String str) =>
 String basisModelToJson(BasisModel data) => json.encode(data.toJson());
 
 class BasisModel {
-  BasisModel({this.id, this.penyakitId, this.gejalaId, this.bobot});
+  BasisModel({this.id, this.penyakitId, this.gejalaId, this.penyakit});
 
   int? id;
   int? penyakitId;
   int? gejalaId;
-  String? bobot;
+  PenyakitModel? penyakit;
 
   factory BasisModel.fromJson(Map<String, dynamic> json) => BasisModel(
         id: json["id"],
         penyakitId: json["penyakit_id"],
         gejalaId: json["gejala_id"],
-        bobot: (json["bobot"]),
+        penyakit: PenyakitModel.fromJson(json["penyakit"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "penyakit_id": penyakitId,
         "gejala_id": gejalaId,
-        "bobot": bobot,
+        "penyakit": penyakit!.toJson(),
       };
 }
