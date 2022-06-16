@@ -54,12 +54,12 @@ class AuthView extends GetView<AuthController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Lottie.asset(CoreImages.doctorJson, height: 200),
+                      Lottie.asset(CoreImages.doctorJson, height: 150),
                       Text(
                         CoreStrings.appName,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: (28),
+                          fontSize: (18),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -91,11 +91,7 @@ class AuthView extends GetView<AuthController> {
                       children: [
                         Text(
                           "Welcome Back",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: (28),
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: CoreStyles.uTitle,
                         ),
                         const Text(
                           "Sign in with your Phone and password  \nto continue",
@@ -106,7 +102,7 @@ class AuthView extends GetView<AuthController> {
                         emailField(),
                         SizedBox(height: (16)),
                         passwordField(),
-                        SizedBox(height: (36)),
+                        SizedBox(height: (26)),
                         GestureDetector(
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
@@ -121,7 +117,7 @@ class AuthView extends GetView<AuthController> {
                             }
                           },
                           child: Container(
-                            height: 60,
+                            height: 50,
                             decoration: BoxDecoration(
                                 color: CoreColor.primary,
                                 borderRadius: BorderRadius.circular(20)),
@@ -132,7 +128,7 @@ class AuthView extends GetView<AuthController> {
                                       ? loading()
                                       : Text(
                                           "Login",
-                                          style: CoreStyles.uTitle
+                                          style: CoreStyles.uSubTitle
                                               .copyWith(color: Colors.white),
                                         ),
                             )),

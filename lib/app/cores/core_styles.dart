@@ -6,5 +6,7 @@ class CoreStyles {
   static TextStyle uTitle = TextStyle(
       color: CoreColor.primary, fontSize: 24, fontWeight: FontWeight.bold);
   static TextStyle uSubTitle = TextStyle(
-      color: CoreColor.primary, fontSize: 18, fontWeight: FontWeight.bold);
+      color: CoreColor.primary, fontSize: 16, fontWeight: FontWeight.bold);
+  static TextStyle uContent =
+      TextStyle(color: CoreColor.kTextColor, fontSize: 12);
 }

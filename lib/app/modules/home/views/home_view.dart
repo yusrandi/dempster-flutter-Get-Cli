@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_cli_dempster_flutter/app/cores/core_styles.dart';
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/informasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/konsultasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/tentang/views/tentang_view.dart';
@@ -19,13 +20,14 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
-      return _authManager.isLogged.value ? body() : AuthView();
+      return _authManager.isLogged.value ? body(context) : AuthView();
     }));
   }
 
-  Container body() {
+  Container body(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(gradient: CoreColor.bottomShadowShoft),
       child: Stack(
         children: [
@@ -78,40 +80,37 @@ class HomeView extends GetView<HomeController> {
 
   Container _dashBoardView() {
     return Container(
-        child: Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+        margin: EdgeInsets.all(8),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 16,
+              left: 16,
+              right: 16,
+              child: Row(children: [
                 SvgPicture.asset("assets/icons/Bell.svg",
                     color: CoreColor.primary),
                 SizedBox(width: 16),
-                Text("Userundie de Lahoya",
-                    style: TextStyle(
-                        color: CoreColor.primary,
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold)),
+                Text("Userundie de Lahoya", style: CoreStyles.uTitle),
               ]),
-          Text("14 April 2022",
-              style: TextStyle(color: CoreColor.primary, fontSize: 16)),
-          Lottie.asset(CoreImages.ionJson),
-          SizedBox(height: 16),
-          Text("28%",
-              style: TextStyle(
-                  color: CoreColor.primary,
-                  fontSize: 66,
-                  fontWeight: FontWeight.bold)),
-          Text(
-              "Diagnosa Terakhir Pada tanggal 14 April 2022 dengan penyakit Malarindu",
-              style: TextStyle(color: CoreColor.primary, fontSize: 16),
-              textAlign: TextAlign.center),
-        ],
-      ),
-    ));
+            ),
+            Center(child: Lottie.asset(CoreImages.ionJson)),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 86,
+              child: Column(
+                children: [
+                  Text("28%", style: CoreStyles.uTitle),
+                  Text(
+                      "Diagnosa Terakhir Pada tanggal 14 April 2022 dengan penyakit Malarindu",
+                      style: CoreStyles.uSubTitle,
+                      textAlign: TextAlign.center),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _listMenu(String title, int index, String menu) {
@@ -120,7 +119,7 @@ class HomeView extends GetView<HomeController> {
             controller.setIndex(index);
           },
           child: Container(
-            height: 80,
+            height: 60,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -136,6 +135,7 @@ class HomeView extends GetView<HomeController> {
                   Text(
                     menu,
                     style: TextStyle(
+                      fontSize: 12,
                       color: controller.count.value == index
                           ? CoreColor.primary
                           : CoreColor.kHintTextColor,

@@ -10,6 +10,7 @@ abstract class Routes {
   static const KONSULTASI = _Paths.KONSULTASI;
   static const DETAIL = _Paths.DETAIL;
   static const DIAGNOSA = _Paths.DIAGNOSA;
+  static const RESULT = _Paths.RESULT;
 }
 
 abstract class _Paths {
@@ -20,4 +21,5 @@ abstract class _Paths {
   static const TENTANG = '/tentang';
   static const DETAIL = '/detail';
   static const DIAGNOSA = '/diagnosa';
+  static const RESULT = '/result';
 }

@@ -20,10 +20,7 @@ class InformasiView extends GetView<InformasiController> {
         children: [
           SizedBox(height: 50),
           Text("Infromasi Penyakit Infeksi Pada Anak",
-              style: TextStyle(
-                  color: CoreColor.primary,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold)),
+              style: CoreStyles.uTitle),
           SizedBox(height: 16),
           MediaQuery.removePadding(
             context: context,

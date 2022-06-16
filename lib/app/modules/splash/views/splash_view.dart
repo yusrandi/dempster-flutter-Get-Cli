@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_colors.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_images.dart';
+import 'package:get_cli_dempster_flutter/app/cores/core_styles.dart';
 import 'package:get_cli_dempster_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:get_cli_dempster_flutter/app/modules/home/views/home_view.dart';
 import 'package:get_cli_dempster_flutter/app/routes/app_pages.dart';
@@ -53,31 +54,23 @@ class SplashView extends GetView<SplashController> {
       child: Center(
           child: Column(
         children: [
-          Expanded(flex: 5, child: Lottie.asset(CoreImages.doctorJson)),
+          Expanded(
+              flex: 5, child: Lottie.asset(CoreImages.doctorJson, height: 100)),
           SizedBox(height: 16),
           Expanded(
             flex: 1,
-            child: Column(children: [
-              Text(
-                "Metode Dempster Shafer",
+            child: Text("Sistem Pakar Pendiagnosa Penyakit Infeksi Pada Anak",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: CoreColor.primary,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text("Sistem Pakar Pendiagnosa Penyakit Infeksi Pada Anak",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: CoreColor.primarySoft,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
-            ]),
+                    color: CoreColor.primarySoft,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 16),
           GestureDetector(
             onTap: (() => Get.offAllNamed(Routes.HOME)),
             child: Container(
-              height: 60,
+              height: 50,
               width: double.infinity,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -85,7 +78,7 @@ class SplashView extends GetView<SplashController> {
               child: Center(
                   child: Text(
                 'GET STARTED',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: CoreStyles.uSubTitle.copyWith(color: Colors.white),
               )),
             ),
           )
