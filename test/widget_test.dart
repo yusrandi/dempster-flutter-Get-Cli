@@ -1,6 +1,22 @@
 import 'dart:math';
 
-void main() {
+import 'package:get_cli_dempster_flutter/app/data/config/api.dart';
+import 'package:get_cli_dempster_flutter/app/data/models/laporan_model.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:get/get.dart';
+import 'package:get_cli_dempster_flutter/app/data/models/basis_model.dart';
+import 'package:get_cli_dempster_flutter/app/data/models/gejala_model.dart';
+import 'package:get_cli_dempster_flutter/app/data/models/user_model.dart';
+import 'package:get_cli_dempster_flutter/app/data/services/basis_service.dart';
+import 'package:get_cli_dempster_flutter/app/data/services/gejala_service.dart';
+import 'package:get_cli_dempster_flutter/app/data/services/laporan_service.dart';
+import 'package:get_cli_dempster_flutter/app/data/services/user_service.dart';
+import 'package:get_cli_dempster_flutter/app/modules/auth/controllers/authentication_manager.dart';
+
+void main() async {}
+
+testing() {
   var m1 = {
     'P001': 0.8,
     'X': 0.2,

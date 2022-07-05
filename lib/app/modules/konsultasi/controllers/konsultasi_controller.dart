@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 
+import '../../../data/models/laporan_model.dart';
+import '../../../data/services/laporan_service.dart';
+import '../../auth/controllers/authentication_manager.dart';
+
 class KonsultasiController extends GetxController {
-  //TODO: Implement KonsultasiController
+  final AuthenticationManager authenticationManager = Get.find();
 
   final count = 0.obs;
   @override
@@ -17,4 +21,9 @@ class KonsultasiController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
+
+  Future<List<LaporanModel>> getDataLaporan() async {
+    return await LaporanService()
+        .getLaporanByUser(authenticationManager.getToken()!);
+  }
 }

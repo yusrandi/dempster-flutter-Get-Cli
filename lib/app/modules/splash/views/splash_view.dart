@@ -67,21 +67,6 @@ class SplashView extends GetView<SplashController> {
                     fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 16),
-          GestureDetector(
-            onTap: (() => Get.offAllNamed(Routes.HOME)),
-            child: Container(
-              height: 50,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: CoreColor.primary),
-              child: Center(
-                  child: Text(
-                'GET STARTED',
-                style: CoreStyles.uSubTitle.copyWith(color: Colors.white),
-              )),
-            ),
-          )
         ],
       )),
     );

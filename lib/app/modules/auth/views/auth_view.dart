@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_cli_dempster_flutter/app/data/models/user_model.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../cores/core_colors.dart';
@@ -17,6 +19,9 @@ class AuthView extends GetView<AuthController> {
   final _formKey = GlobalKey<FormState>();
   final _userEmail = TextEditingController();
   final _userPass = TextEditingController();
+  final _userName = TextEditingController();
+  final _userAddress = TextEditingController();
+  final _userNamaAnak = TextEditingController();
 
   String? validatePass(value) {
     if (value.isEmpty) {
@@ -36,37 +41,51 @@ class AuthView extends GetView<AuthController> {
     }
   }
 
+  String? validateField(value) {
+    if (value.isEmpty) {
+      return kFieldNullError;
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CoreColor.primary,
       body: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Lottie.asset(CoreImages.doctorJson, height: 150),
-                      Text(
-                        CoreStrings.appName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: (18),
-                          fontWeight: FontWeight.bold,
+          Obx(
+            () => Container(
+              height: authController.count.value == 0
+                  ? MediaQuery.of(context).size.height * 0.5
+                  : MediaQuery.of(context).size.height * 0.2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Lottie.asset(CoreImages.doctorJson,
+                            height:
+                                authController.count.value == 0 ? 150 : 100),
+                        Text(
+                          CoreStrings.appName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: (18),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -85,57 +104,9 @@ class AuthView extends GetView<AuthController> {
                 key: _formKey,
                 child: Center(
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Welcome Back",
-                          style: CoreStyles.uTitle,
-                        ),
-                        const Text(
-                          "Sign in with your Phone and password  \nto continue",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        SizedBox(height: (26)),
-                        emailField(),
-                        SizedBox(height: (16)),
-                        passwordField(),
-                        SizedBox(height: (26)),
-                        GestureDetector(
-                          onTap: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-
-                              var email = _userEmail.text.trim();
-                              var password = _userPass.text.trim();
-
-                              print(email);
-                              await authController.loginUser(email, password);
-                              KeyboardUtil.hideKeyboard(context);
-                            }
-                          },
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: CoreColor.primary,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                                child: Obx(
-                              () =>
-                                  authController.status.value == Status.running
-                                      ? loading()
-                                      : Text(
-                                          "Login",
-                                          style: CoreStyles.uSubTitle
-                                              .copyWith(color: Colors.white),
-                                        ),
-                            )),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: Obx(() => authController.count.value == 0
+                        ? login(context)
+                        : regis(context)),
                   ),
                 ),
               ),
@@ -146,25 +117,220 @@ class AuthView extends GetView<AuthController> {
     );
   }
 
+  login(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Welcome Back",
+          style: CoreStyles.uTitle,
+        ),
+        const Text(
+          "Sign in with your Phone and password  \nto continue",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.grey),
+        ),
+        SizedBox(height: (26)),
+        emailField(_userEmail, validateEmail, TextInputType.phone, 'Phone',
+            Icons.alternate_email_rounded),
+        SizedBox(height: (16)),
+        passwordField(),
+        SizedBox(height: (26)),
+        GestureDetector(
+          onTap: () async {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+
+              var email = _userEmail.text.trim();
+              var password = _userPass.text.trim();
+
+              print(email);
+              await authController.loginUser(email, password);
+              KeyboardUtil.hideKeyboard(context);
+            }
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: CoreColor.primary,
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Obx(
+              () => authController.status.value == Status.running
+                  ? loading()
+                  : Text(
+                      "Login",
+                      style: CoreStyles.uSubTitle.copyWith(color: Colors.white),
+                    ),
+            )),
+          ),
+        ),
+        SizedBox(height: 16),
+        RichText(
+          text: TextSpan(
+              text: 'belum punya akun ?',
+              style: CoreStyles.uContent,
+              children: <TextSpan>[
+                TextSpan(
+                    text: ' Daftar sekarang',
+                    style: CoreStyles.uSubTitle,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // navigate to desired screen
+                        authController.count.value = 1;
+                      })
+              ]),
+        ),
+      ],
+    );
+  }
+
+  regis(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Silahkan Daftar",
+          style: CoreStyles.uTitle,
+        ),
+        SizedBox(height: (26)),
+        emailField(_userName, validateField, TextInputType.text, 'Nama Lengkap',
+            Icons.person_pin),
+        SizedBox(height: 8),
+        emailField(_userNamaAnak, validateField, TextInputType.text,
+            'Nama Anak', Icons.person_pin),
+        SizedBox(height: 8),
+        GestureDetector(
+          onTap: () {
+            showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1980),
+              lastDate: DateTime(DateTime.now().year + 1),
+            ).then((date) => authController.selectedDate.value =
+                date.toString().split(' ')[0]);
+          },
+          child: Container(
+            padding: EdgeInsets.all(8),
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                border: Border.all(color: CoreColor.kHintTextColor),
+                borderRadius: BorderRadius.circular(8)),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.date_range,
+                    color: CoreColor.primary,
+                  ),
+                  SizedBox(width: 8),
+                  Obx(() => Text(
+                        authController.selectedDate.value,
+                        style: CoreStyles.uSubTitle
+                            .copyWith(color: Colors.black, fontSize: 15),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: (8)),
+        emailField(_userAddress, validateField, TextInputType.text, 'Alamat',
+            Icons.home_rounded),
+        SizedBox(height: (8)),
+        emailField(_userEmail, validateEmail, TextInputType.phone, 'phone',
+            Icons.alternate_email_rounded),
+        SizedBox(height: (16)),
+        passwordField(),
+        SizedBox(height: (26)),
+        GestureDetector(
+          onTap: () async {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+
+              var email = _userEmail.text.trim();
+              var password = _userPass.text.trim();
+              var namaLengkap = _userName.text.trim();
+              var namaAnak = _userNamaAnak.text.trim();
+              var address = _userAddress.text.trim();
+
+              print(email);
+              await authController.userDaftar(
+                  UserModel(
+                      id: 0,
+                      address: address,
+                      namaAnak: namaAnak,
+                      name: namaLengkap,
+                      phone: email,
+                      roleId: 3,
+                      tglLahirAnak: ''),
+                  password);
+              KeyboardUtil.hideKeyboard(context);
+            }
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: CoreColor.primary,
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Obx(
+              () => authController.status.value == Status.running
+                  ? loading()
+                  : Text(
+                      "Register",
+                      style: CoreStyles.uSubTitle.copyWith(color: Colors.white),
+                    ),
+            )),
+          ),
+        ),
+        SizedBox(height: 16),
+        RichText(
+          text: TextSpan(
+              text: 'sudah punya akun ?',
+              style: CoreStyles.uContent,
+              children: <TextSpan>[
+                TextSpan(
+                    text: ' Masuk sekarang',
+                    style: CoreStyles.uSubTitle,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // navigate to desired screen
+                        authController.count.value = 0;
+                      })
+              ]),
+        ),
+      ],
+    );
+  }
+
   loading() {
     return CircularProgressIndicator(color: Colors.white);
   }
 
-  TextFormField emailField() {
+  TextFormField emailField(
+      TextEditingController controller,
+      String? Function(String?) validator,
+      TextInputType inputType,
+      String title,
+      IconData icon) {
     return TextFormField(
-      controller: _userEmail,
-      validator: validateEmail,
+      controller: controller,
+      validator: validator,
       cursorColor: CoreColor.primary,
-      keyboardType: TextInputType.number,
+      keyboardType: inputType,
       decoration: InputDecoration(
-        labelText: 'Phone',
+        labelText: title,
         labelStyle: const TextStyle(color: Colors.black),
 
-        hintText: 'Enter your phone number',
+        hintText: 'Enter your $title',
         // Here is key idea
 
-        prefixIcon:
-            Icon(Icons.alternate_email_rounded, color: CoreColor.primary),
+        prefixIcon: Icon(icon, color: CoreColor.primary),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: CoreColor.primary, width: 1),

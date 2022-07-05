@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_cli_dempster_flutter/app/cores/core_strings.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_styles.dart';
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/informasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/konsultasi_view.dart';
@@ -12,10 +13,12 @@ import 'package:lottie/lottie.dart';
 import '../../../cores/core_images.dart';
 import '../../auth/controllers/authentication_manager.dart';
 import '../../auth/views/auth_view.dart';
+import '../../result/controllers/result_manager.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  final AuthenticationManager _authManager = Get.find();
+  final AuthenticationManager _authManager = Get.put(AuthenticationManager());
+  final ResultManager resultManager = Get.put(ResultManager());
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +87,14 @@ class HomeView extends GetView<HomeController> {
         child: Stack(
           children: [
             Positioned(
-              top: 16,
+              top: 46,
               left: 16,
               right: 16,
               child: Row(children: [
                 SvgPicture.asset("assets/icons/Bell.svg",
                     color: CoreColor.primary),
                 SizedBox(width: 16),
-                Text("Userundie de Lahoya", style: CoreStyles.uTitle),
+                Text("${CoreStrings.appName}", style: CoreStyles.uTitle),
               ]),
             ),
             Center(child: Lottie.asset(CoreImages.ionJson)),
@@ -101,9 +104,18 @@ class HomeView extends GetView<HomeController> {
               bottom: 86,
               child: Column(
                 children: [
-                  Text("28%", style: CoreStyles.uTitle),
                   Text(
-                      "Diagnosa Terakhir Pada tanggal 14 April 2022 dengan penyakit Malarindu",
+                      resultManager.getValue() == null
+                          ? '...'
+                          : (resultManager.getValue()! * 100)
+                                  .round()
+                                  .toString() +
+                              ' %',
+                      style: CoreStyles.uTitle),
+                  Text(
+                      resultManager.getID() == null
+                          ? '...'
+                          : 'Hasil diagnosa terakhir dengan penyakit ${resultManager.getID()}',
                       style: CoreStyles.uSubTitle,
                       textAlign: TextAlign.center),
                 ],

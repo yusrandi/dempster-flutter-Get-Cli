@@ -26,18 +26,20 @@ class DiagnosaView extends GetView<DiagnosaController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CoreColor.primary.withOpacity(0.2),
+      // backgroundColor: CoreColor.primary.withOpacity(0.2),
       appBar: AppBar(
         title: Text("Form Diagnosa"),
         centerTitle: false,
         backgroundColor: CoreColor.primary,
       ),
-      body: body(),
+      body: body(context),
     );
   }
 
-  Container body() {
+  Container body(BuildContext context) {
     return Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(gradient: CoreColor.bottomShadowShoft),
         padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),

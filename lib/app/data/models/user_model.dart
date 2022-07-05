@@ -15,6 +15,8 @@ class UserModel {
     this.address,
     this.phone,
     this.roleId,
+    this.namaAnak,
+    this.tglLahirAnak,
   });
 
   int? id;
@@ -22,6 +24,8 @@ class UserModel {
   String? address;
   String? phone;
   int? roleId;
+  String? namaAnak;
+  String? tglLahirAnak;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -29,6 +33,8 @@ class UserModel {
         address: json["address"],
         phone: json["phone"],
         roleId: json["role_id"],
+        namaAnak: json["nama_anak"],
+        tglLahirAnak: json["tgl_lahir_anak"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +43,7 @@ class UserModel {
         "address": address,
         "phone": phone,
         "role_id": roleId,
+        "nama_anak": namaAnak,
+        "tgl_lahir_anak": tglLahirAnak,
       };
 }

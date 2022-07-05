@@ -6,6 +6,7 @@ import '../../../cores/core_colors.dart';
 import '../../../cores/core_strings.dart';
 import '../../../data/config/api.dart';
 import '../../../data/models/user_model.dart';
+import '../../../data/services/user_service.dart';
 import 'authentication_manager.dart';
 import 'cache_manager.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,7 @@ class AuthController extends GetxController with CacheManager {
   Rx<Status> status = Status.none.obs;
   RxBool passwordVisible = false.obs;
   late final AuthenticationManager _authManager;
+  RxString selectedDate = 'Tanggal Lahir Anak'.obs;
 
   @override
   void onInit() {
@@ -56,5 +58,28 @@ class AuthController extends GetxController with CacheManager {
     Get.snackbar(CoreStrings.appName, "${data['responsemsg']}",
         backgroundColor: CoreColor.whiteSoft, duration: Duration(seconds: 2));
     return _response.body;
+  }
+
+  Future<String> userDaftar(UserModel user, String pass) async {
+    print('lahir ${selectedDate.value}');
+    status.value = Status.running;
+
+    var haha = await UserService().userRegis(
+        UserModel(
+            id: 0,
+            name: user.name,
+            address: user.address,
+            phone: user.phone,
+            tglLahirAnak: selectedDate.value,
+            namaAnak: user.namaAnak),
+        pass);
+
+    status.value = Status.none;
+
+    Get.snackbar(CoreStrings.appName, "$haha",
+        backgroundColor: CoreColor.whiteSoft, duration: Duration(seconds: 2));
+    print(haha);
+
+    return haha;
   }
 }
