@@ -13,6 +13,7 @@ class DetailInformasi extends StatelessWidget {
   Widget build(BuildContext context) {
     var index = Get.arguments;
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         backgroundColor: CoreColor.primary,
         centerTitle: false,
@@ -29,12 +30,21 @@ class DetailInformasi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'a. Pengertian',
+                    'Pengertian',
                     style: CoreStyles.uTitle,
                   ),
                   SizedBox(width: 8),
-                  Text('${informasiController.listTitle[index]['subtitle']}'
-                      .indent(10)),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white),
+                    child: Text(
+                      '${informasiController.listTitle[index]['subtitle']}'
+                          .indent(10),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -67,34 +77,52 @@ class DetailInformasi extends StatelessWidget {
       itemCount: data.length,
       itemBuilder: (context, index) => Container(
         padding: EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              data[index]['detail'],
-              style: CoreStyles.uTitle,
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10,
+        child: Visibility(
+          visible: data[index]['desc'].length < 1 ? false : true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data[index]['detail'],
+                style: CoreStyles.uTitle,
               ),
-              itemCount: data[index]['desc'].length,
-              itemBuilder: (context, i) => Container(
-                padding: EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('${i + 1}. '),
-                    SizedBox(width: 8),
-                    Expanded(child: Text(data[index]['desc'][i])),
-                  ],
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white),
+                padding: EdgeInsets.all(8.0),
+                margin: EdgeInsets.all(8),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 8,
+                  ),
+                  itemCount: data[index]['desc'].length,
+                  itemBuilder: (context, i) => Container(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Visibility(
+                            visible:
+                                data[index]['desc'].length < 2 ? false : true,
+                            child: Container(
+                                margin: EdgeInsets.only(right: 8),
+                                child: Text('${i + 1}. '))),
+                        Expanded(
+                            child: Text(
+                          data[index]['desc'][i],
+                          textAlign: TextAlign.justify,
+                        )),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -21,6 +21,7 @@ class LaporanService extends GetConnect {
   Future<String> create(LaporanModel model) async {
     var _response = await http.post(Uri.parse(Api().laporanUrl), body: {
       "penyakits": model.penyakits,
+      "gejalas": model.gejalas,
       "user_id": model.userId.toString(),
       "cf": model.cf,
     });

@@ -11,7 +11,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Dempster",
+      title: "Child Care",
       theme: ThemeData(fontFamily: "Nunito"),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

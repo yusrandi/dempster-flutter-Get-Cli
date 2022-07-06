@@ -5,6 +5,7 @@ import 'package:get_cli_dempster_flutter/app/cores/core_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_strings.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_styles.dart';
+import 'package:get_cli_dempster_flutter/app/modules/diagnosa/views/diagnosa_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/informasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/konsultasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/tentang/views/tentang_view.dart';
@@ -40,8 +41,10 @@ class HomeView extends GetView<HomeController> {
                   : controller.count.value == 1
                       ? InformasiView()
                       : controller.count.value == 2
-                          ? KonsultasiView()
-                          : TentangView()))),
+                          ? DiagnosaView()
+                          : controller.count.value == 3
+                              ? KonsultasiView()
+                              : TentangView()))),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -72,10 +75,13 @@ class HomeView extends GetView<HomeController> {
                   "assets/icons/bookmark-filled.svg", 1, "informasi")),
           Expanded(
               flex: 1,
-              child: _listMenu("assets/icons/Bill Icon.svg", 2, "diagnosa")),
+              child: _listMenu("assets/icons/Conversation.svg", 2, "diagnosa")),
           Expanded(
               flex: 1,
-              child: _listMenu("assets/icons/Settings.svg", 3, "setting")),
+              child: _listMenu("assets/icons/Bill Icon.svg", 3, "history")),
+          Expanded(
+              flex: 1,
+              child: _listMenu("assets/icons/Settings.svg", 4, "setting")),
         ],
       ),
     );
@@ -106,7 +112,7 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   Text(
                       resultManager.getValue() == null
-                          ? '...'
+                          ? 'anda belum konsultasi'
                           : (resultManager.getValue()! * 100)
                                   .round()
                                   .toString() +

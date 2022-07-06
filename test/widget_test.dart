@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:get_cli_dempster_flutter/app/data/config/api.dart';
@@ -14,7 +15,16 @@ import 'package:get_cli_dempster_flutter/app/data/services/laporan_service.dart'
 import 'package:get_cli_dempster_flutter/app/data/services/user_service.dart';
 import 'package:get_cli_dempster_flutter/app/modules/auth/controllers/authentication_manager.dart';
 
-void main() async {}
+void main() async {
+  var _response = await http.post(Uri.parse(Api().getUser + '/login'), body: {
+    "phone": '000',
+    "password": '87654321',
+  });
+
+  print(_response);
+  var data = json.decode(_response.body);
+  print(data['responsemsg']);
+}
 
 testing() {
   var m1 = {

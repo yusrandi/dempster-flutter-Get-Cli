@@ -15,6 +15,7 @@ class LaporanModel {
   LaporanModel({
     this.id,
     this.penyakits,
+    this.gejalas,
     this.userId,
     this.cf,
     this.tanggal,
@@ -22,6 +23,7 @@ class LaporanModel {
 
   int? id;
   String? penyakits;
+  String? gejalas;
   int? userId;
   String? cf;
   String? tanggal;
@@ -29,6 +31,7 @@ class LaporanModel {
   factory LaporanModel.fromJson(Map<String, dynamic> json) => LaporanModel(
         id: json["id"],
         penyakits: json["penyakits"],
+        gejalas: json["gejalas"],
         userId: json["user_id"],
         cf: json["cf"],
         tanggal: json["tanggal"],
@@ -37,6 +40,7 @@ class LaporanModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "penyakits": penyakits,
+        "gejalas": gejalas,
         "user_id": userId,
         "cf": cf,
         "tanggal": tanggal,

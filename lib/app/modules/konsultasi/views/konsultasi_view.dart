@@ -56,17 +56,6 @@ class KonsultasiView extends GetView<KonsultasiController> {
             ),
           ),
         ),
-        Positioned(
-          right: 8,
-          bottom: 80,
-          child: FloatingActionButton(
-            onPressed: () {
-              Get.toNamed(Routes.DIAGNOSA);
-            },
-            backgroundColor: CoreColor.primary,
-            child: Icon(Icons.add),
-          ),
-        )
       ],
     );
   }
@@ -111,17 +100,40 @@ class KonsultasiView extends GetView<KonsultasiController> {
                         color: CoreColor.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.bold)),
-                Container(
-                  margin: EdgeInsets.only(top: 8),
-                  padding: EdgeInsets.symmetric(horizontal: 26, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Text('${(double.parse(model.cf!) * 100)} %',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold)),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 26, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: Text('${(double.parse(model.cf!) * 100)} %',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.DETAIL_KONSULTASI,
+                          arguments: model.gejalas),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 36, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: CoreColor.primary,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Text('Detail',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

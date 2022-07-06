@@ -12,6 +12,8 @@ class DiagnosaController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    dataListResult.clear();
+
     List<GejalaModel> gejala = await getGejala();
     gejala.forEach((element) {
       dataListResult.add(DiagnosaModel(element, false));
@@ -30,6 +32,7 @@ class DiagnosaController extends GetxController {
 
   @override
   void onClose() {}
+
   void increment() => count.value++;
 
   Future<List<GejalaModel>> getGejala() async {

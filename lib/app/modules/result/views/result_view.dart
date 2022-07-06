@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_cli_dempster_flutter/app/cores/core_styles.dart';
+import 'package:get_cli_dempster_flutter/app/modules/diagnosa/controllers/diagnosa_controller.dart';
 
 import '../../../cores/core_colors.dart';
 import '../../../routes/app_pages.dart';
@@ -29,7 +30,9 @@ class ResultView extends GetView<ResultController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Hasil DIagnosa Penyakit', style: CoreStyles.uSubTitle),
+                Text('Gejala yang dirasakan user', style: CoreStyles.uSubTitle),
+                listDiagnosa(),
+                Text('Hasil Diagnosa Penyakit', style: CoreStyles.uSubTitle),
                 listLastResult(),
                 Obx(() => Column(
                       children: [
@@ -198,6 +201,27 @@ class ResultView extends GetView<ResultController> {
                               child: Text('${(item.value * 100)} %')),
                         ],
                       );
+                    }),
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: resultController.listResultItem.length),
+              ],
+            )));
+  }
+
+  Container listDiagnosa() {
+    return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16),
+        child: Obx(() => Column(
+              children: [
+                ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: ((context, index) {
+                      String item = resultController.listDiagnosa[index];
+
+                      return Text(item);
                     }),
                     separatorBuilder: (context, index) => Divider(),
                     itemCount: resultController.listResultItem.length),

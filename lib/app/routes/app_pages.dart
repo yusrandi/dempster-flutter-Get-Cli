@@ -8,6 +8,7 @@ import 'package:get_cli_dempster_flutter/app/modules/informasi/bindings/informas
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/detail_informasi.dart';
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/informasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/bindings/konsultasi_binding.dart';
+import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/detail_konsultasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/konsultasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/result/bindings/result_binding.dart';
 import 'package:get_cli_dempster_flutter/app/modules/result/views/result_view.dart';
@@ -48,6 +49,10 @@ class AppPages {
       name: _Paths.KONSULTASI,
       page: () => KonsultasiView(),
       binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_KONSULTASI,
+      page: () => DetailKonsultasiView(),
     ),
     GetPage(
       name: _Paths.TENTANG,

@@ -18,11 +18,13 @@ class ResultController extends GetxController {
   List<ResultModel> listAllResult = <ResultModel>[].obs;
   List<PenyakitModel> listPenyakit = <PenyakitModel>[].obs;
   List<ResultItem> listResultItem = <ResultItem>[].obs;
+  List<String> listDiagnosa = <String>[].obs;
 
   RxString id = ''.obs;
   RxDouble value = 0.0.obs;
 
-  final AuthenticationManager authenticationManager = Get.find();
+  final AuthenticationManager authenticationManager =
+      Get.put(AuthenticationManager());
 
   @override
   void onInit() async {
@@ -31,6 +33,9 @@ class ResultController extends GetxController {
     listPenyakit = await PenyakitService().fetchPenyakit();
     print('Penyakits ${listPenyakit.length}');
     final List<DiagnosaModel> diagnosaModels = Get.arguments;
+    diagnosaModels.where((e) => e.isSelected == true).forEach((element) {
+      listDiagnosa.add(element.gejalaModel.gejalaNama!);
+    });
 
     setResult(diagnosaModels);
   }
@@ -172,7 +177,7 @@ class ResultController extends GetxController {
           print('Nama ${getPenyakit(el)}');
           namas.add(getPenyakit(el));
         });
-        listResultItem.add(ResultItem(namas.join(','), element.value));
+        listResultItem.add(ResultItem(namas.join(', '), element.value));
       }
     });
 
@@ -234,6 +239,7 @@ class ResultController extends GetxController {
     String result = await LaporanService().create(LaporanModel(
         userId: int.parse(authenticationManager.getToken()!),
         penyakits: penyakits,
+        gejalas: listDiagnosa.join(','),
         cf: cf));
 
     Get.offAndToNamed(Routes.HOME);
