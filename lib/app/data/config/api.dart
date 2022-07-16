@@ -3,9 +3,9 @@ class Api {
   static Api instance = Api();
   //* Base API URL
 
-  // static const domain = "http://172.20.10.2/Dempster-Shafer-Laravel/public";
+  static const domain = "http://192.168.8.101/Dempster-Shafer-Laravel/public";
 
-  static const domain = "https://rini.lp2muniprima.ac.id";
+  // static const domain = "https://rini.lp2muniprima.ac.id";
 
   static const baseURL = domain + "/api";
   static const imageURL = "$domain/public/storage/product_photos_thumb";

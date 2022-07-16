@@ -11,8 +11,9 @@ import '../models/basis_model.dart';
 class UserService extends GetConnect {
   final AuthenticationManager _authManager = Get.put(AuthenticationManager());
 
-  Future<UserModel> getUser(String id) async {
-    final response = await http.get(Uri.parse(Api.instance.getUser + '/' + id));
+  Future<UserModel> getUser() async {
+    final response = await http
+        .get(Uri.parse(Api.instance.getUser + '/' + _authManager.getToken()!));
     UserModel user = UserModel.fromJson(json.decode(response.body)['data']);
 
     return user;

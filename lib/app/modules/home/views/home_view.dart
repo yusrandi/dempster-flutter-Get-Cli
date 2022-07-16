@@ -9,6 +9,7 @@ import 'package:get_cli_dempster_flutter/app/modules/diagnosa/views/diagnosa_vie
 import 'package:get_cli_dempster_flutter/app/modules/informasi/views/informasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/konsultasi/views/konsultasi_view.dart';
 import 'package:get_cli_dempster_flutter/app/modules/tentang/views/tentang_view.dart';
+import 'package:get_cli_dempster_flutter/app/routes/app_pages.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../cores/core_images.dart';
@@ -81,7 +82,7 @@ class HomeView extends GetView<HomeController> {
               child: _listMenu("assets/icons/Bill Icon.svg", 3, "history")),
           Expanded(
               flex: 1,
-              child: _listMenu("assets/icons/Settings.svg", 4, "setting")),
+              child: _listMenu("assets/icons/information.svg", 4, "about")),
         ],
       ),
     );
@@ -96,12 +97,15 @@ class HomeView extends GetView<HomeController> {
               top: 46,
               left: 16,
               right: 16,
-              child: Row(children: [
-                SvgPicture.asset("assets/icons/Bell.svg",
-                    color: CoreColor.primary),
-                SizedBox(width: 16),
-                Text("${CoreStrings.appName}", style: CoreStyles.uTitle),
-              ]),
+              child: GestureDetector(
+                onTap: () => Get.toNamed(Routes.PROFILE),
+                child: Row(children: [
+                  SvgPicture.asset("assets/icons/male-doctor.svg",
+                      color: CoreColor.primary),
+                  SizedBox(width: 16),
+                  Text("${CoreStrings.appName}", style: CoreStyles.uTitle),
+                ]),
+              ),
             ),
             Center(child: Lottie.asset(CoreImages.ionJson)),
             Positioned(
