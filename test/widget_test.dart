@@ -15,7 +15,14 @@ import 'package:get_cli_dempster_flutter/app/data/services/laporan_service.dart'
 import 'package:get_cli_dempster_flutter/app/data/services/user_service.dart';
 import 'package:get_cli_dempster_flutter/app/modules/auth/controllers/authentication_manager.dart';
 
-void main() async {}
+void main() async {
+  var response = await http.post(Uri.parse(Api().getUser + '/login'), body: {
+    "phone": '0000',
+    "password": '87654321',
+  });
+
+  print(response.body);
+}
 
 testing() {
   var m1 = {

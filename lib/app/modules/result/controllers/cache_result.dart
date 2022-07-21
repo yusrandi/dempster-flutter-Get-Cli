@@ -17,6 +17,12 @@ mixin CacheResult {
     final box = GetStorage();
     return box.read(CacheResultKey.VALUE.toString());
   }
+
+  Future<void> removeToken() async {
+    final box = GetStorage();
+    await box.remove(CacheResultKey.ID.toString());
+    await box.remove(CacheResultKey.VALUE.toString());
+  }
 }
 
 enum CacheResultKey { ID, VALUE }
