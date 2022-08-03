@@ -49,7 +49,7 @@ class ProfileView extends GetView<ProfileController> {
                     child: Column(
                       children: [
                         SizedBox(height: 50),
-                        Lottie.asset(CoreImages.profileJson, height: 200),
+                        Image.asset(CoreImages.profileImg, height: 200),
                         Text(
                           user.name!,
                           style:
