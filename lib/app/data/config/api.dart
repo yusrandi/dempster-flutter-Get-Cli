@@ -5,7 +5,7 @@ class Api {
 
   // static const domain = "http://192.168.8.101/Dempster-Shafer-Laravel/public";
 
-  static const domain = "https://rini.lp2muniprima.ac.id";
+  static const domain = "https://childcare.adhyy.my.id/public";
 
   static const baseURL = domain + "/api";
   static const imageURL = "$domain/public/storage/product_photos_thumb";
