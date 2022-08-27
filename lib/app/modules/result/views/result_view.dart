@@ -224,7 +224,7 @@ class ResultView extends GetView<ResultController> {
                       return Text(item);
                     }),
                     separatorBuilder: (context, index) => Divider(),
-                    itemCount: resultController.listResultItem.length),
+                    itemCount: resultController.listDiagnosa.length),
               ],
             )));
   }
