@@ -16,12 +16,14 @@ import 'package:get_cli_dempster_flutter/app/data/services/user_service.dart';
 import 'package:get_cli_dempster_flutter/app/modules/auth/controllers/authentication_manager.dart';
 
 void main() async {
-  var response = await http.post(Uri.parse(Api().getUser + '/login'), body: {
-    "phone": '0000',
-    "password": '87654321',
+  var _response = await http.put(Uri.parse(Api().getUser + '/2'), body: {
+    "name": "namelu",
   });
 
-  print(response.body);
+  // print(_response.body);
+  var data = json.decode(_response.body);
+
+  print(data['data']);
 }
 
 testing() {
