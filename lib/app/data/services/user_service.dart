@@ -44,12 +44,13 @@ class UserService extends GetConnect {
   }
 
   Future<String> userUpdate(String id, String name, String namaAnak,
-      String tglLahirAnak, String address) async {
+      String tglLahirAnak, String address, String phone) async {
     var _response = await http.put(Uri.parse(Api().getUser + '/' + id), body: {
       "name": name,
       "nama_anak": namaAnak,
       "tgl_lahir_anak": tglLahirAnak,
       "address": address,
+      "phone": phone,
     });
 
     // print(_response.body);

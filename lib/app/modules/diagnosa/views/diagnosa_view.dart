@@ -36,7 +36,7 @@ class DiagnosaView extends GetView<DiagnosaController> {
             visible: diagnosaController.dataListResult
                         .where((p0) => p0.isSelected == true)
                         .length <
-                    2
+                    1
                 ? false
                 : true,
             child: Align(

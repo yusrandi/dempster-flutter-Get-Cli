@@ -40,12 +40,12 @@ class ProfileController extends GetxController {
   }
 
   Future<String> userUpdate(
-      String id, String nama, String anak, String alamat) async {
+      String id, String nama, String anak, String alamat, String phone) async {
     print('lahir ${selectedDate.value}');
     status.value = Status.running;
 
     var haha = await UserService()
-        .userUpdate(id, nama, anak, selectedDate.value, alamat);
+        .userUpdate(id, nama, anak, selectedDate.value, alamat, phone);
 
     status.value = Status.none;
 

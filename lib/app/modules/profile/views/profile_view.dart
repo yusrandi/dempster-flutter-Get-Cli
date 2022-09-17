@@ -27,6 +27,7 @@ class ProfileView extends GetView<ProfileController> {
   final _userName = TextEditingController();
   final _userAddress = TextEditingController();
   final _userNamaAnak = TextEditingController();
+  final _userPhone = TextEditingController();
 
   String? validatePass(value) {
     if (value.isEmpty) {
@@ -76,6 +77,7 @@ class ProfileView extends GetView<ProfileController> {
             _userName.text = user.name!;
             _userNamaAnak.text = user.namaAnak!;
             _userAddress.text = user.address!;
+            _userPhone.text = user.phone!;
             profileController.selectedDate.value = user.tglLahirAnak!;
 
             return SingleChildScrollView(
@@ -92,7 +94,7 @@ class ProfileView extends GetView<ProfileController> {
                       children: [
                         Image.asset(CoreImages.profileImg, height: 100),
                         Text(
-                          user.phone!,
+                          user.name!,
                           style:
                               CoreStyles.uTitle.copyWith(color: Colors.white),
                         ),
@@ -106,6 +108,13 @@ class ProfileView extends GetView<ProfileController> {
                       key: _formKey,
                       child: Column(
                         children: [
+                          emailField(
+                              _userPhone,
+                              validateEmail,
+                              TextInputType.number,
+                              'Nomor Hp',
+                              Icons.phone_android_rounded),
+                          SizedBox(height: 8),
                           emailField(
                               _userName,
                               validateField,
@@ -204,13 +213,15 @@ class ProfileView extends GetView<ProfileController> {
                                       var namaLengkap = _userName.text.trim();
                                       var namaAnak = _userNamaAnak.text.trim();
                                       var address = _userAddress.text.trim();
+                                      var phone = _userPhone.text.trim();
 
                                       print(email);
                                       await profileController.userUpdate(
                                           user.id!.toString(),
                                           namaLengkap,
                                           namaAnak,
-                                          address);
+                                          address,
+                                          phone);
                                       KeyboardUtil.hideKeyboard(context);
                                     }
                                   },
