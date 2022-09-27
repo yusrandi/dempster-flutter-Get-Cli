@@ -46,13 +46,20 @@ class ResultView extends GetView<ResultController> {
                                   style: CoreStyles.uSubTitle,
                                 ),
                                 TextSpan(
-                                  text: ' Sebesar',
+                                  text: ' Sebesar ',
                                   style: CoreStyles.uContent,
                                 ),
                                 TextSpan(
-                                  text:
-                                      ' ${resultController.value.value * 100}%',
+                                  text: resultController.value.value * 100 > 100
+                                      ? '100%'
+                                      : '${resultController.value.value * 100}%',
                                   style: CoreStyles.uTitle,
+                                ),
+                                TextSpan(
+                                  text: resultController.value.value * 100 > 90
+                                      ? '\nHarap segera periksa ke Dokter'
+                                      : '',
+                                  style: CoreStyles.uContent,
                                 ),
                               ]),
                         ),

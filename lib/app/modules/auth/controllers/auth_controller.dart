@@ -60,6 +60,27 @@ class AuthController extends GetxController with CacheManager {
     return _response.body;
   }
 
+  Future<String> lupapassword(String phone, String password) async {
+    status.value = Status.running;
+    var _response = await http.post(Uri.parse(Api().lupapasswordUrl), body: {
+      "phone": phone.toString(),
+      "password": password.toString(),
+    });
+
+    status.value = Status.none;
+
+    var data = json.decode(_response.body);
+    print(data['responsecode']);
+
+    Get.snackbar(CoreStrings.appName, "${data['responsemsg']}",
+        backgroundColor: CoreColor.whiteSoft, duration: Duration(seconds: 2));
+
+    if (data['responsecode'] == '1') {
+      count.value = 0;
+    }
+    return _response.body;
+  }
+
   Future<String> userDaftar(UserModel user, String pass) async {
     print('lahir ${selectedDate.value}');
     status.value = Status.running;

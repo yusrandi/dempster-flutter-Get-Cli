@@ -106,7 +106,9 @@ class AuthView extends GetView<AuthController> {
                   child: SingleChildScrollView(
                     child: Obx(() => authController.count.value == 0
                         ? login(context)
-                        : regis(context)),
+                        : authController.count.value == 1
+                            ? regis(context)
+                            : lupaPassword(context)),
                   ),
                 ),
               ),
@@ -166,6 +168,19 @@ class AuthView extends GetView<AuthController> {
             )),
           ),
         ),
+        SizedBox(height: 8),
+        GestureDetector(
+          onTap: () => authController.count.value = 2,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            width: double.infinity,
+            child: Text(
+              'Forgot Password ?',
+              style: CoreStyles.uSubTitle.copyWith(fontWeight: FontWeight.w800),
+              textAlign: TextAlign.right,
+            ),
+          ),
+        ),
         SizedBox(height: 16),
         RichText(
           text: TextSpan(
@@ -179,6 +194,74 @@ class AuthView extends GetView<AuthController> {
                       ..onTap = () {
                         // navigate to desired screen
                         authController.count.value = 1;
+                      })
+              ]),
+        ),
+      ],
+    );
+  }
+
+  lupaPassword(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Lupa Password ?",
+          style: CoreStyles.uTitle,
+        ),
+        const Text(
+          "Harap memperhatikan dan mengingat baik-baik kata sandi anda!",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.grey),
+        ),
+        SizedBox(height: (26)),
+        emailField(_userEmail, validateEmail, TextInputType.phone, 'Phone',
+            Icons.alternate_email_rounded),
+        SizedBox(height: (16)),
+        passwordField(),
+        SizedBox(height: (26)),
+        GestureDetector(
+          onTap: () async {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+
+              var password = _userPass.text.trim();
+              var phone = _userEmail.text.trim();
+
+              await authController.lupapassword(phone, password);
+              KeyboardUtil.hideKeyboard(context);
+            }
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: CoreColor.primary,
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Obx(
+              () => authController.status.value == Status.running
+                  ? loading()
+                  : Text(
+                      "Submit",
+                      style: CoreStyles.uSubTitle.copyWith(color: Colors.white),
+                    ),
+            )),
+          ),
+        ),
+        SizedBox(height: 16),
+        RichText(
+          text: TextSpan(
+              text: 'sudah ingat ?',
+              style: CoreStyles.uContent,
+              children: <TextSpan>[
+                TextSpan(
+                    text: ' Masuk sekarang',
+                    style: CoreStyles.uSubTitle,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // navigate to desired screen
+                        authController.count.value = 0;
                       })
               ]),
         ),

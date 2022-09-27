@@ -16,4 +16,5 @@ class Api {
   String getUser = "$baseURL/user";
   String getBasis = "$baseURL/basis";
   String laporanUrl = "$baseURL/laporan";
+  String lupapasswordUrl = "$baseURL/user/lupapassword";
 }
