@@ -77,10 +77,69 @@ class ResultController extends GetxController {
         print(listResult[i]);
 
         mResult = nilaiMatrixMap(mResult, listResult[i]);
-        print('result $mResult');
+        print('rescult $mResult');
         print('=====================================');
       } else {
         mResult = listResult[0];
+        print('rescult $mResult');
+
+        List<ResultItem> result = [];
+
+        mResult.forEach((key, value) {
+          print('rescult $key, value $value');
+          result.add(ResultItem(key, value));
+        });
+
+        listResultItem.clear();
+        result.forEach((element) {
+          var namas = [];
+          if (element.id != 'X') {
+            element.id.split(',').forEach((el) {
+              print('Nama ${getPenyakit(el)}');
+              namas.add(getPenyakit(el));
+            });
+            listResultItem.add(ResultItem(namas.join(', '), element.value));
+          }
+        });
+
+        ResultItem resultItem =
+            listResultItem.reduce(((a, b) => a.value > b.value ? a : b));
+
+        print('ResultItem $resultItem');
+        id.value = resultItem.id;
+        value.value = resultItem.value;
+
+        if (id.value == 'Difteri') {
+          indexResult.value = 0;
+        } else if (id.value == 'Gondongan') {
+          indexResult.value = 1;
+        }
+
+        indexResult.value = id.value == 'Difteri'
+            ? 0
+            : id.value == 'Gondongan'
+                ? 1
+                : id.value == 'Campak Morbili'
+                    ? 2
+                    : id.value == 'Tetanus'
+                        ? 3
+                        : id.value == 'TBC'
+                            ? 4
+                            : id.value == 'Polio'
+                                ? 5
+                                : id.value == 'Hepatitis B'
+                                    ? 6
+                                    : id.value == 'Hepatitis A'
+                                        ? 7
+                                        : id.value == 'Tifoid'
+                                            ? 8
+                                            : id.value == 'Demam Berdarah'
+                                                ? 9
+                                                : id.value == 'Malaria'
+                                                    ? 10
+                                                    : id.value == 'Congekan'
+                                                        ? 11
+                                                        : 0;
       }
     }
   }

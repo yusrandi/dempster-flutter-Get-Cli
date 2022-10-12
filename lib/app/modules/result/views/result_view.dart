@@ -64,28 +64,6 @@ class ResultView extends GetView<ResultController> {
                               ]),
                         ),
                         SizedBox(height: 16),
-                        RichText(
-                          text: TextSpan(
-                              text:
-                                  'Informasi terkait Gejala, Ciri-ciri, dan penanganannya ?',
-                              style: CoreStyles.uContent,
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: '\nKlik disini!',
-                                    style: CoreStyles.uSubTitle,
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // navigate to desired screen
-                                        // resultManager.saveResult(
-                                        //     id: resultController.id.value,
-                                        //     value:
-                                        //         resultController.value.value);
-                                        Get.toNamed(Routes.DETAIL,
-                                            arguments: resultController
-                                                .indexResult.value);
-                                      })
-                              ]),
-                        ),
                         Container(
                             height: 150,
                             width: 150,
@@ -116,6 +94,28 @@ class ResultView extends GetView<ResultController> {
                                 ),
                               ],
                             )),
+                        RichText(
+                          text: TextSpan(
+                              text:
+                                  'Informasi terkait Gejala, Ciri-ciri, dan penanganannya ?',
+                              style: CoreStyles.uContent,
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: '\nKlik disini!',
+                                    style: CoreStyles.uSubTitle,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // navigate to desired screen
+                                        // resultManager.saveResult(
+                                        //     id: resultController.id.value,
+                                        //     value:
+                                        //         resultController.value.value);
+                                        Get.toNamed(Routes.DETAIL,
+                                            arguments: resultController
+                                                .indexResult.value);
+                                      })
+                              ]),
+                        ),
                       ],
                     )),
                 SizedBox(height: 16),
